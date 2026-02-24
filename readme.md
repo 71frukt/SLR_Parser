@@ -29,7 +29,6 @@ sudo apt install -y \
 
 ```zsh
 sudo snap install cmake --classic
-# Если уже есть cmake из apt, а он скорее всего слишком старый, то для использования нового из snap выполните
 echo 'export PATH="/snap/bin:$PATH"' >> ~/.zshrc # или ~/.bashrc
 source ~/.zshrc # или ~/.bashrc
 ```
@@ -47,7 +46,14 @@ cd SLR_Parser
 
 cmake -B build -DCMAKE_BUILD_TYPE=Release # -DSANITIZE=ON включение санитайзеров
 cmake --build build -j$(nproc)
+```
 
-# Запуск
+## Запуск
+```zsh
 ./build/slr_parser
 ```
+
+| Флаги                    |   Действие                 |
+|--------------------------|----------------------------|
+| `-h`, `--help`           |   Вывести помощь           |
+| `-f`, `--source_file`    | Задать имя входного файла  |
