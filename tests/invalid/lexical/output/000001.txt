@@ -1,0 +1,9 @@
+STACK                         INPUT                                   ACTION
+------------------------------------------------------------------------------------------
+$                             1.000000 + 68.000000 term               Shift 4
+$ num                         + 68.000000 term                        Reduce rule 9
+$ F                           + 68.000000 term                        Reduce rule 6
+$ T                           + 68.000000 term                        Reduce rule 3
+$ E                           + 68.000000 term                        Shift 7
+$ E +                         68.000000 term                          Shift 4
+Syntax error: line 1, column 7

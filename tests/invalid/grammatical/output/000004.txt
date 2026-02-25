@@ -1,0 +1,5 @@
+STACK                         INPUT                                   ACTION
+------------------------------------------------------------------------------------------
+$                             ( )                                     Shift 6
+$ (                           )                                       Error
+Grammatical error at line 1, column 3

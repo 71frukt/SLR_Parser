@@ -20,33 +20,11 @@ int main(const int argc, const char *argv[]) try {
 
     slr_parser::AppSettings settings = {};
     if (slr_parser::ParseCommandLineArgs(settings, argc, argv) == false)
-    {
         return 0;
-    }
+   
+    // std::cout << "Enter the code:" << std::endl;
 
-    std::istream* input_stream = nullptr;
-    std::unique_ptr<std::ifstream> file_storage;
-
-    if (!settings.filepath.empty())
-    {
-        file_storage = std::make_unique<std::ifstream>(settings.filepath);
-
-        if (!file_storage->is_open())
-        {
-            throw std::runtime_error("Could not open file: " + settings.filepath);
-        }
-        
-        input_stream = file_storage.get();
-    }
-    else
-    {
-        input_stream = &std::cin;
-    }
-    
-    
-    std::cout << "Enter the code:" << std::endl;
-
-    slr_parser::lexer::CrazyLexer lexer(input_stream);
+    slr_parser::lexer::CrazyLexer lexer(settings.istream);
 
     std::vector<std::unique_ptr<slr_parser::lexer::Token>> tokens;
 
@@ -60,8 +38,6 @@ int main(const int argc, const char *argv[]) try {
             tokens.push_back(std::move(lexer.cur_token));
     }
 
-    // std::cout << "Lexing done. Tokens count: " << tokens.size() << std::endl;
-
     slr_parser::syntaxer::Grammar grammar;
     
     slr_parser::syntaxer::GrammarWorker lr_builder(grammar);
@@ -72,7 +48,7 @@ int main(const int argc, const char *argv[]) try {
     
     slr_parser::syntaxer::Parser parser(grammar, canonical_collection, first_follow);
 
-    parser.Run(std::move(tokens));
+    parser.Run(std::move(tokens), *settings.ostream);
 
     return 0;
 }

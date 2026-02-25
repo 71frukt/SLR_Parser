@@ -1,0 +1,4 @@
+STACK                         INPUT                                   ACTION
+------------------------------------------------------------------------------------------
+$                             var term                                Shift 5
+Syntax error: line 1, column 4

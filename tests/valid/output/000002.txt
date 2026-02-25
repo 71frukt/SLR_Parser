@@ -1,0 +1,13 @@
+STACK                         INPUT                                   ACTION
+------------------------------------------------------------------------------------------
+$                             a + b                                   Shift 5
+$ id                          + b                                     Reduce rule 8
+$ F                           + b                                     Reduce rule 6
+$ T                           + b                                     Reduce rule 3
+$ E                           + b                                     Shift 7
+$ E +                         b                                       Shift 5
+$ E + id                                                              Reduce rule 8
+$ E + F                                                               Reduce rule 6
+$ E + T                                                               Reduce rule 1
+$ E                                                                   Accept
+[[SUCCESS]]

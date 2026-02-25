@@ -1,0 +1,12 @@
+STACK                         INPUT                                   ACTION
+------------------------------------------------------------------------------------------
+$                             1.230000 / 4.560000                     Shift 4
+$ num                         / 4.560000                              Reduce rule 9
+$ F                           / 4.560000                              Reduce rule 6
+$ T                           / 4.560000                              Shift 10
+$ T /                         4.560000                                Shift 4
+$ T / num                                                             Reduce rule 9
+$ T / F                                                               Reduce rule 5
+$ T                                                                   Reduce rule 3
+$ E                                                                   Accept
+[[SUCCESS]]

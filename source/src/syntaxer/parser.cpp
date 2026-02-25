@@ -1,4 +1,5 @@
 #include "syntaxer/parser.hpp"
+#include "lexer/token.hpp"
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -91,23 +92,36 @@ void Parser::BuildTables(const DfaBuilder& col, const GrammarWorker::FirstFollow
     }
 }
 
-void Parser::Run(std::vector<std::unique_ptr<lexer::Token>> tokens)
+void Parser::Run(std::vector<std::unique_ptr<lexer::Token>> tokens, std::ostream& ostream)
 {
     std::vector<int> stack = {0};
     size_t cursor = 0;
 
-    std::cout << std::left 
-              << std::setw(30) << "STACK" 
-              << std::setw(40) << "INPUT" 
-              << "ACTION" << std::endl;
-    std::cout << std::string(90, '-') << std::endl;
+    ostream << std::left 
+            << std::setw(30) << "STACK" 
+            << std::setw(40) << "INPUT" 
+            << "ACTION" << std::endl;
 
-    while (true) {
+    ostream << std::string(90, '-') << std::endl;
+
+    while (true)
+    {
+        Grammar::Symbol current_sym = GrammarWorker::FirstFollow::EndMarker();
+        const lexer::Token* token_ptr = nullptr;
+
+        if (cursor < tokens.size())
+        {
+            token_ptr = tokens[cursor].get();
+            current_sym = Grammar::Symbol(token_ptr->type);
+            
+            // Проверка на UNKNOWN только если токен существует
+            if (token_ptr->type == lexer::Token::UNKNOWN) {
+                ostream << "Syntax error: " << "line " << tokens[cursor]->code_place.line << ", column " << tokens[cursor]->code_place.column << std::endl;
+                return;
+            }
+        }
+
         int current_state = stack.back();
-        
-        Grammar::Symbol current_sym = (cursor < tokens.size()) 
-                             ? Grammar::Symbol(tokens[cursor]->type) 
-                             : GrammarWorker::FirstFollow::EndMarker();
 
         Action action = {Action::Type::Error, 0};
         auto it = action_table_.find({current_state, current_sym});
@@ -132,16 +146,17 @@ void Parser::Run(std::vector<std::unique_ptr<lexer::Token>> tokens)
                 input_str += GetSymbolName_(Grammar::Symbol(t->type)) + " "; 
         }
 
-        std::cout << std::left 
-                  << std::setw(30) << StackToString(stack) 
-                  << std::setw(40) << input_str
-                  << action.ToString() << std::endl;
+        ostream << std::left 
+                << std::setw(30) << StackToString(stack) 
+                << std::setw(40) << input_str
+                << action.ToString() << std::endl;
 
         if (action.type == Action::Type::Shift)
         {
             stack.push_back(action.operand);
             cursor++;
         }
+
         else if (action.type == Action::Type::Reduce)
         {
             const auto& rule = grammar_.GetRules()[action.operand];
@@ -158,18 +173,31 @@ void Parser::Run(std::vector<std::unique_ptr<lexer::Token>> tokens)
             }
             else
             {
-                std::cerr << "CRITICAL ERROR: No GOTO entry after reduce!" << std::endl;
+                ostream << "CRITICAL ERROR: No GOTO entry after reduce!" << std::endl;
                 return;
             }
         }
+
         else if (action.type == Action::Type::Accept)
         {
-            std::cout << "[[SUCCESS]]" << std::endl;
+            ostream << "[[SUCCESS]]" << std::endl;
             return;
         }
         else
         {
-            std::cerr << "Syntax Error!" << std::endl;
+            ostream << "Grammatical error ";
+
+            if (cursor < tokens.size()) 
+            {
+                ostream << "at line " << tokens[cursor]->code_place.line 
+                        << ", column " << tokens[cursor]->code_place.column
+                        << std::endl;
+            } 
+            else 
+            {
+                ostream << "Unexpected End of File. Perhaps you missed smth?";
+            }
+         
             return;
         }
     }

@@ -1,0 +1,19 @@
+STACK                         INPUT                                   ACTION
+------------------------------------------------------------------------------------------
+$                             ( ( 1.000000 + 2.000000 )               Shift 6
+$ (                           ( 1.000000 + 2.000000 )                 Shift 6
+$ ( (                         1.000000 + 2.000000 )                   Shift 4
+$ ( ( num                     + 2.000000 )                            Reduce rule 9
+$ ( ( F                       + 2.000000 )                            Reduce rule 6
+$ ( ( T                       + 2.000000 )                            Reduce rule 3
+$ ( ( E                       + 2.000000 )                            Shift 7
+$ ( ( E +                     2.000000 )                              Shift 4
+$ ( ( E + num                 )                                       Reduce rule 9
+$ ( ( E + F                   )                                       Reduce rule 6
+$ ( ( E + T                   )                                       Reduce rule 1
+$ ( ( E                       )                                       Shift 16
+$ ( ( E )                                                             Reduce rule 7
+$ ( F                                                                 Reduce rule 6
+$ ( T                                                                 Reduce rule 3
+$ ( E                                                                 Error
+Grammatical error Unexpected End of File. Perhaps you missed smth?

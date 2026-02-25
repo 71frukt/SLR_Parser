@@ -1,0 +1,8 @@
+STACK                         INPUT                                   ACTION
+------------------------------------------------------------------------------------------
+$                             123456.000000                           Shift 4
+$ num                                                                 Reduce rule 9
+$ F                                                                   Reduce rule 6
+$ T                                                                   Reduce rule 3
+$ E                                                                   Accept
+[[SUCCESS]]

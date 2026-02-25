@@ -1,0 +1,26 @@
+STACK                         INPUT                                   ACTION
+------------------------------------------------------------------------------------------
+$                             a + b - c / d * f                       Shift 5
+$ id                          + b - c / d * f                         Reduce rule 8
+$ F                           + b - c / d * f                         Reduce rule 6
+$ T                           + b - c / d * f                         Reduce rule 3
+$ E                           + b - c / d * f                         Shift 7
+$ E +                         b - c / d * f                           Shift 5
+$ E + id                      - c / d * f                             Reduce rule 8
+$ E + F                       - c / d * f                             Reduce rule 6
+$ E + T                       - c / d * f                             Reduce rule 1
+$ E                           - c / d * f                             Shift 8
+$ E -                         c / d * f                               Shift 5
+$ E - id                      / d * f                                 Reduce rule 8
+$ E - F                       / d * f                                 Reduce rule 6
+$ E - T                       / d * f                                 Shift 10
+$ E - T /                     d * f                                   Shift 5
+$ E - T / id                  * f                                     Reduce rule 8
+$ E - T / F                   * f                                     Reduce rule 5
+$ E - T                       * f                                     Shift 9
+$ E - T *                     f                                       Shift 5
+$ E - T * id                                                          Reduce rule 8
+$ E - T * F                                                           Reduce rule 4
+$ E - T                                                               Reduce rule 2
+$ E                                                                   Accept
+[[SUCCESS]]
