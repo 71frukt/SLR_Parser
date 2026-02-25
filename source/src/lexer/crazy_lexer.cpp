@@ -14,14 +14,8 @@ void CrazyLexer::CreateToken_(Token::Type type, const char* attribute)
     switch (type) {
         case Token::NUM     : attr = std::atof  (attribute); break;
         case Token::ID      : attr = std::string(attribute);    break;
-        case Token::EOF_    : attr = std::monostate{};             break;
-        case Token::PLUS    : attr = std::monostate{};             break;
-        case Token::MUL     : attr = std::monostate{};             break;
-        case Token::LPAREN  : attr = std::monostate{};             break;
-        case Token::RPAREN  : attr = std::monostate{};             break;
-        case Token::UNKNOWN : attr = std::monostate{};             break;
         
-        default: throw std::runtime_error("unknown Token::Type");
+        default             : attr = std::monostate{};             break;
     };
 
     cur_token = std::make_unique<Token>(type, attr, cur_location_);

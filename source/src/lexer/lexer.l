@@ -40,7 +40,9 @@ void slr_parser::lexer::CrazyLexer::UpdateCurLocation_()
 {DIGIT}     { this->CreateToken_(slr_parser::lexer::Token::NUM     , YYText()); return slr_parser::lexer::Token::NUM     ; }
 {ALPHA}+    { this->CreateToken_(slr_parser::lexer::Token::ID      , YYText()); return slr_parser::lexer::Token::ID      ; }
 "+"         { this->CreateToken_(slr_parser::lexer::Token::PLUS    , YYText()); return slr_parser::lexer::Token::PLUS    ; }
+"-"         { this->CreateToken_(slr_parser::lexer::Token::MINUS   , YYText()); return slr_parser::lexer::Token::MINUS   ; }
 "*"         { this->CreateToken_(slr_parser::lexer::Token::MUL     , YYText()); return slr_parser::lexer::Token::MUL     ; }
+"/"         { this->CreateToken_(slr_parser::lexer::Token::DIV     , YYText()); return slr_parser::lexer::Token::DIV     ; }
 "("         { this->CreateToken_(slr_parser::lexer::Token::LPAREN  , YYText()); return slr_parser::lexer::Token::LPAREN  ; }
 ")"         { this->CreateToken_(slr_parser::lexer::Token::RPAREN  , YYText()); return slr_parser::lexer::Token::RPAREN  ; }
 .           { this->CreateToken_(slr_parser::lexer::Token::UNKNOWN , YYText()); return slr_parser::lexer::Token::UNKNOWN ; }

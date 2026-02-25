@@ -1,1 +1,1 @@
-6 + corova * (pop - pop) ;;;
+6 + corova * (pop - pop)

@@ -45,8 +45,15 @@ FLEX_TARGET(MyScanner ${CMAKE_CURRENT_SOURCE_DIR}/source/src/lexer/lexer.l
 
 add_executable(${PROJECT_NAME}
     source/main.cpp
+
     source/src/lexer/lexer.cpp
     source/src/lexer/crazy_lexer.cpp
+
+    source/src/syntaxer/parser.cpp
+    source/src/syntaxer/grammar.cpp
+    source/src/syntaxer/grammar_worker.cpp
+    source/src/syntaxer/dfa_builder.cpp
+
     ${FLEX_MyScanner_OUTPUTS}
 )
 

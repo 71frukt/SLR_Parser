@@ -2,11 +2,21 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
-#include "lexer/token.hpp"
-#include "lexer/crazy_lexer.hpp"
+
 #include "command_line_args.hpp"
 
+#include "lexer/crazy_lexer.hpp"
+#include "lexer/token.hpp"
+#include "syntaxer/grammar.hpp"
+#include "syntaxer/grammar_worker.hpp"
+#include "syntaxer/dfa_builder.hpp"
+#include "syntaxer/parser.hpp"
+
+
 int main(const int argc, const char *argv[]) try {
+
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(NULL);
 
     slr_parser::AppSettings settings = {};
     if (slr_parser::ParseCommandLineArgs(settings, argc, argv) == false)
@@ -33,30 +43,37 @@ int main(const int argc, const char *argv[]) try {
         input_stream = &std::cin;
     }
     
-    slr_parser::lexer::CrazyLexer lexer(input_stream);
     
-    int token_type;
+    std::cout << "Enter the code:" << std::endl;
 
-    while ((token_type = lexer.yylex()) != slr_parser::lexer::Token::EOF_)
+    slr_parser::lexer::CrazyLexer lexer(input_stream);
+
+    std::vector<std::unique_ptr<slr_parser::lexer::Token>> tokens;
+
+    while (true)
     {
-        std::cout << "Got token ID: " << token_type << std::endl;
+        int type = lexer.yylex();
+        
+        if (type == slr_parser::lexer::Token::EOF_) break;
 
-        auto& token = *lexer.cur_token; // ссылка на объект внутри unique_ptr
-
-        std::cout << "Token ID: " << token_type 
-                  << " [L:" << token.code_place.line 
-                  << ", C:" << token.code_place.column << "]";
-
-        if (token_type == slr_parser::lexer::Token::ID)
-        {
-            std::cout << "attr: " << std::get<slr_parser::lexer::Token::VarT>(token.attr) << std::endl;
-        }
-
-        else if (token_type == slr_parser::lexer::Token::NUM)
-        {
-            std::cout << "attr: " << std::get<slr_parser::lexer::Token::NumT>(token.attr) << std::endl;
-        }
+        if (lexer.cur_token)
+            tokens.push_back(std::move(lexer.cur_token));
     }
+
+    // std::cout << "Lexing done. Tokens count: " << tokens.size() << std::endl;
+
+    slr_parser::syntaxer::Grammar grammar;
+    
+    slr_parser::syntaxer::GrammarWorker lr_builder(grammar);
+    slr_parser::syntaxer::DfaBuilder canonical_collection(lr_builder);
+    
+    canonical_collection.Build();
+    slr_parser::syntaxer::GrammarWorker::FirstFollow first_follow(grammar);
+    
+    slr_parser::syntaxer::Parser parser(grammar, canonical_collection, first_follow);
+
+    parser.Run(std::move(tokens));
+
     return 0;
 }
 

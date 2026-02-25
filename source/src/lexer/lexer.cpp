@@ -340,8 +340,8 @@ int yyFlexLexer::yylex()
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 10
-#define YY_END_OF_BUFFER 11
+#define YY_NUM_RULES 12
+#define YY_END_OF_BUFFER 13
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -349,10 +349,11 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[20] =
+static const flex_int16_t yy_accept[22] =
     {   0,
-        0,    0,   11,    9,    1,    2,    7,    8,    6,    5,
-        3,    3,    4,    1,    0,    3,    4,    3,    0
+        0,    0,   13,   11,    1,    2,    9,   10,    7,    5,
+        6,    8,    3,    3,    4,    1,    0,    3,    4,    3,
+        0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -361,16 +362,16 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    2,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    2,    1,    1,    1,    1,    1,    1,    1,    4,
-        5,    6,    7,    1,    1,    8,    1,    9,   10,   10,
-       10,   10,   10,   10,   10,   10,   10,    1,    1,    1,
-        1,    1,    1,    1,   11,   11,   11,   11,   11,   11,
-       11,   11,   11,   11,   11,   11,   11,   11,   11,   11,
-       11,   11,   11,   11,   11,   11,   11,   11,   11,   11,
-        1,    1,    1,    1,    1,    1,   11,   11,   11,   11,
+        5,    6,    7,    1,    8,    9,   10,   11,   12,   12,
+       12,   12,   12,   12,   12,   12,   12,    1,    1,    1,
+        1,    1,    1,    1,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+        1,    1,    1,    1,    1,    1,   13,   13,   13,   13,
 
-       11,   11,   11,   11,   11,   11,   11,   11,   11,   11,
-       11,   11,   11,   11,   11,   11,   11,   11,   11,   11,
-       11,   11,    1,    1,    1,    1,    1,    1,    1,    1,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
+       13,   13,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -387,46 +388,46 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[12] =
+static const YY_CHAR yy_meta[14] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    2,    3,    3,
-        1
+        1,    1,    1,    1,    1,    1,    1,    1,    2,    1,
+        3,    3,    1
     } ;
 
-static const flex_int16_t yy_base[22] =
+static const flex_int16_t yy_base[24] =
     {   0,
-        0,    0,   22,   23,   19,   23,   23,   23,   23,   23,
-       12,   11,    7,   15,    0,    8,    4,    0,   23,   10,
-       11
+        0,    0,   24,   25,   21,   25,   25,   25,   25,   25,
+       25,   25,   13,   12,    7,   17,    0,    9,    4,    0,
+       25,   12,   13
     } ;
 
-static const flex_int16_t yy_def[22] =
+static const flex_int16_t yy_def[24] =
     {   0,
-       19,    1,   19,   19,   19,   19,   19,   19,   19,   19,
-       19,   20,   19,   19,   21,   20,   19,   21,    0,   19,
-       19
+       21,    1,   21,   21,   21,   21,   21,   21,   21,   21,
+       21,   21,   21,   22,   21,   21,   23,   22,   21,   23,
+        0,   21,   21
     } ;
 
-static const flex_int16_t yy_nxt[35] =
+static const flex_int16_t yy_nxt[39] =
     {   0,
-        4,    5,    6,    7,    8,    9,   10,    4,   11,   12,
-       13,   16,   16,   18,   17,   15,   14,   17,   15,   15,
-       14,   19,    3,   19,   19,   19,   19,   19,   19,   19,
-       19,   19,   19,   19
+        4,    5,    6,    7,    8,    9,   10,   11,    4,   12,
+       13,   14,   15,   18,   18,   20,   19,   17,   16,   19,
+       17,   17,   16,   21,    3,   21,   21,   21,   21,   21,
+       21,   21,   21,   21,   21,   21,   21,   21
     } ;
 
-static const flex_int16_t yy_chk[35] =
+static const flex_int16_t yy_chk[39] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,   20,   20,   21,   17,   16,   14,   13,   12,   11,
-        5,    3,   19,   19,   19,   19,   19,   19,   19,   19,
-       19,   19,   19,   19
+        1,    1,    1,   22,   22,   23,   19,   18,   16,   15,
+       14,   13,    5,    3,   21,   21,   21,   21,   21,   21,
+       21,   21,   21,   21,   21,   21,   21,   21
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static const flex_int32_t yy_rule_can_match_eol[11] =
+static const flex_int32_t yy_rule_can_match_eol[13] =
     {   0,
-0, 1, 0, 0, 0, 0, 0, 0, 0, 0,     };
+0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
 
 /* The intent behind this definition is that it'll catch
  * any uses of REJECT which flex missed.
@@ -441,11 +442,11 @@ static const flex_int32_t yy_rule_can_match_eol[11] =
 #include <string>
 
 #include "lexer/crazy_lexer.hpp"
-#line 445 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.cpp"
+#line 446 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.cpp"
 #line 12 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
     // count lines
 #define YY_USER_ACTION this->UpdateCurLocation_();
-#line 449 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.cpp"
+#line 450 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.cpp"
 #line 24 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
 void slr_parser::lexer::CrazyLexer::UpdateCurLocation_()
 {
@@ -455,8 +456,8 @@ void slr_parser::lexer::CrazyLexer::UpdateCurLocation_()
     // yyleng - длина совпадения (автоматическая переменная Flex)
     real_cur_column_ += yyleng;
 }
-#line 459 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.cpp"
 #line 460 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.cpp"
+#line 461 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.cpp"
 
 #define INITIAL 0
 
@@ -591,7 +592,7 @@ YY_DECL
 #line 35 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
 
 
-#line 595 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.cpp"
+#line 596 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -618,13 +619,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 20 )
+				if ( yy_current_state >= 22 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 23 );
+		while ( yy_base[yy_current_state] != 25 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -687,29 +688,39 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 #line 43 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::MUL     , YYText()); return slr_parser::lexer::Token::MUL     ; }
+{ this->CreateToken_(slr_parser::lexer::Token::MINUS   , YYText()); return slr_parser::lexer::Token::MINUS   ; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 44 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::LPAREN  , YYText()); return slr_parser::lexer::Token::LPAREN  ; }
+{ this->CreateToken_(slr_parser::lexer::Token::MUL     , YYText()); return slr_parser::lexer::Token::MUL     ; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 45 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::RPAREN  , YYText()); return slr_parser::lexer::Token::RPAREN  ; }
+{ this->CreateToken_(slr_parser::lexer::Token::DIV     , YYText()); return slr_parser::lexer::Token::DIV     ; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 46 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::UNKNOWN , YYText()); return slr_parser::lexer::Token::UNKNOWN ; }
+{ this->CreateToken_(slr_parser::lexer::Token::LPAREN  , YYText()); return slr_parser::lexer::Token::LPAREN  ; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
+#line 47 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
+{ this->CreateToken_(slr_parser::lexer::Token::RPAREN  , YYText()); return slr_parser::lexer::Token::RPAREN  ; }
+	YY_BREAK
+case 11:
+YY_RULE_SETUP
 #line 48 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
+{ this->CreateToken_(slr_parser::lexer::Token::UNKNOWN , YYText()); return slr_parser::lexer::Token::UNKNOWN ; }
+	YY_BREAK
+case 12:
+YY_RULE_SETUP
+#line 50 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
 ECHO;
 	YY_BREAK
-#line 713 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.cpp"
+#line 724 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1126,7 +1137,7 @@ int yyFlexLexer::yy_get_next_buffer()
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 20 )
+			if ( yy_current_state >= 22 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1154,11 +1165,11 @@ int yyFlexLexer::yy_get_next_buffer()
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 20 )
+		if ( yy_current_state >= 22 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 19);
+	yy_is_jam = (yy_current_state == 21);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1681,5 +1692,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 48 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
+#line 50 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
 
