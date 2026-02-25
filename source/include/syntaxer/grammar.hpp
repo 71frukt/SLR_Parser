@@ -42,14 +42,14 @@ public:
     Symbol(lexer::Token::Type token_type  ) : is_terminal_(true ), type_(token_type  ) {}
     Symbol(NonTerminalT       non_terminal) : is_terminal_(false), type_(non_terminal) {}    
 
-    [[nodiscard]] NonTerminalT AsTerminal() const
+    [[nodiscard]] NonTerminalT AsNonTerminal() const
     {
         if (is_terminal_)
             throw std::runtime_error("Attempt to cast terminal to non-terminal");
         return std::get<NonTerminalT>(type_);
     }
 
-    [[nodiscard]] lexer::Token::Type AsToken() const
+    [[nodiscard]] lexer::Token::Type AsTerminal() const
     {
         if (!is_terminal_)
             throw std::runtime_error("Attempt to cast non-terminal to terminal");
@@ -63,6 +63,16 @@ public:
         return is_terminal_ == other.is_terminal_ && type_ == other.type_;
     }
 
+
+    bool operator<(const Symbol& other) const
+    {
+        // 1. Сначала сравниваем флаг терминальности
+        if (is_terminal_ != other.is_terminal_) {
+            return is_terminal_ < other.is_terminal_;
+        }
+        // 2. Если типы равны, сравниваем содержимое variant
+        return type_ < other.type_;
+    }
 
 private:
     bool is_terminal_;
@@ -84,12 +94,15 @@ struct Grammar::Item
     size_t rule_num;
     size_t dot_pos;
 
-    [[nodiscard]] bool operator<(const Item& other) const noexcept
+
+    // for std::set
+    [[nodiscard]] bool operator<(const Item& other) const noexcept  
     {
         if (rule_num != other.rule_num) return rule_num < other.rule_num;
         return dot_pos < other.dot_pos;
     }
 
+    // for std::set
     [[nodiscard]] bool operator==(const Item& other) const noexcept
     {
         return rule_num == other.rule_num && dot_pos == other.dot_pos;

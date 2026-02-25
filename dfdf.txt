@@ -1,0 +1,543 @@
+вот мой main
+
+
+
+#include <exception>
+
+#include <fstream>
+
+#include <iostream>
+
+#include <memory>
+
+
+
+#include "command_line_args.hpp"
+
+
+
+#include "lexer/crazy_lexer.hpp"
+
+#include "lexer/token.hpp"
+
+#include "syntaxer/grammar.hpp"
+
+#include "syntaxer/grammar_worker.hpp"
+
+#include "syntaxer/dfa_builder.hpp"
+
+#include "syntaxer/parser.hpp"
+
+
+
+
+
+int main(const int argc, const char *argv[]) try {
+
+
+
+    std::ios_base::sync_with_stdio(false);
+
+    std::cin.tie(NULL);
+
+
+
+    slr_parser::AppSettings settings = {};
+
+    if (slr_parser::ParseCommandLineArgs(settings, argc, argv) == false)
+
+    {
+
+        return 0;
+
+    }
+
+
+
+    std::istream* input_stream = nullptr;
+
+    std::unique_ptr<std::ifstream> file_storage;
+
+
+
+    if (!settings.filepath.empty())
+
+    {
+
+        file_storage = std::make_unique<std::ifstream>(settings.filepath);
+
+
+
+        if (!file_storage->is_open())
+
+        {
+
+            throw std::runtime_error("Could not open file: " + settings.filepath);
+
+        }
+
+        
+
+        input_stream = file_storage.get();
+
+    }
+
+    else
+
+    {
+
+        input_stream = &std::cin;
+
+    }
+
+    
+
+    
+
+    std::cout << "Enter the code:" << std::endl;
+
+
+
+    slr_parser::lexer::CrazyLexer lexer(input_stream);
+
+
+
+    std::vector<std::unique_ptr<slr_parser::lexer::Token>> tokens;
+
+
+
+    while (true)
+
+    {
+
+        int type = lexer.yylex();
+
+        
+
+        if (type == slr_parser::lexer::Token::EOF_) break;
+
+
+
+        if (lexer.cur_token)
+
+            tokens.push_back(std::move(lexer.cur_token));
+
+    }
+
+
+
+    // std::cout << "Lexing done. Tokens count: " << tokens.size() << std::endl;
+
+
+
+    slr_parser::syntaxer::Grammar grammar;
+
+    
+
+    slr_parser::syntaxer::GrammarWorker lr_builder(grammar);
+
+    slr_parser::syntaxer::DfaBuilder canonical_collection(lr_builder);
+
+    
+
+    canonical_collection.Build();
+
+    slr_parser::syntaxer::GrammarWorker::FirstFollow first_follow(grammar);
+
+    
+
+    slr_parser::syntaxer::Parser parser(grammar, canonical_collection, first_follow);
+
+
+
+    parser.Run(std::move(tokens));
+
+
+
+    return 0;
+
+}
+
+
+
+catch (std::exception& e) {
+
+    std::cerr << "EXEPTION!!\n what():" << e.what() << std::endl;
+
+}
+
+
+
+
+
+
+
+вот parcer.cpp
+
+#include "syntaxer/parser.hpp"
+
+#include <iostream>
+
+#include <iomanip>
+
+
+
+namespace slr_parser {
+
+namespace syntaxer   {
+
+    
+
+
+
+Parser::Parser(const Grammar& grammar, const DfaBuilder& col, const GrammarWorker::FirstFollow& ff) 
+
+    : grammar_(grammar)
+
+{
+
+    BuildTables(col, ff);
+
+}
+
+
+
+void Parser::BuildTables(const DfaBuilder& col, const GrammarWorker::FirstFollow& ff) {
+
+    const auto& states = col.GetStates();
+
+    const auto& transitions = col.GetTransitions();
+
+
+
+    for (size_t i = 0; i < states.size(); ++i)
+
+    {
+
+        int state_idx = static_cast<int>(i);
+
+        const Grammar::State& state = states[i];
+
+
+
+        for (const auto& [key, next_state] : transitions)
+
+        {
+
+            if (key.first != state_idx) continue;
+
+            
+
+            Grammar::Symbol symbol = key.second;
+
+            
+
+            if (symbol.IsTerminal())
+
+                action_table_[{state_idx, symbol}] = {Action::Type::Shift, next_state};
+
+            
+
+            else
+
+                goto_table_[{state_idx, symbol}] = next_state;
+
+        }
+
+
+
+        for (const auto& item : state)
+
+        {
+
+            const auto& rule = grammar_.GetRules()[item.rule_num];
+
+
+
+            if (item.dot_pos >= rule.rhs.size())
+
+            {
+
+                if (rule.lhs == Grammar::NonTerminalT::DODIK)
+
+                {
+
+                    Grammar::Symbol eof = GrammarWorker::FirstFollow::EndMarker();
+
+                    action_table_[{state_idx, eof}] = {Action::Type::Accept, 0};
+
+                } 
+
+                
+
+                else
+
+                {
+
+                    const auto& follow_set = ff.GetFollow(rule.lhs);
+
+                    
+
+                    for (const auto& term : follow_set)
+
+                    {
+
+                        action_table_[{state_idx, term}] = {Action::Type::Reduce, static_cast<int>(item.rule_num)};
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+
+
+void Parser::Run(std::vector<std::unique_ptr<lexer::Token>> tokens)
+
+{
+
+    std::vector<int> stack = {0};
+
+    
+
+    size_t cursor = 0;
+
+
+
+    std::cout << std::left 
+
+              << std::setw(30) << "STACK" 
+
+              << std::setw(40) << "INPUT" 
+
+              << "ACTION" << std::endl;
+
+    std::cout << std::string(90, '-') << std::endl;
+
+
+
+    while (true) {
+
+        int current_state = stack.back();
+
+        
+
+        Grammar::Symbol current_sym = (cursor < tokens.size()) 
+
+                             ? Grammar::Symbol(tokens[cursor]->type) 
+
+                             : GrammarWorker::FirstFollow::EndMarker();
+
+
+
+        Action action = {Action::Type::Error, 0};
+
+        auto it = action_table_.find({current_state, current_sym});
+
+
+
+        if (it != action_table_.end())
+
+            action = it->second;
+
+
+
+        std::string input_str;
+
+        for (size_t k = cursor; k < tokens.size(); ++k) 
+
+        {
+
+            auto& t = tokens[k];
+
+            if (t->type == lexer::Token::ID)
+
+                try { input_str += std::get<std::string>(t->attr) + " "; } catch(...) { input_str += "id "; }
+
+            
+
+            else if (t->type == lexer::Token::NUM)
+
+                 try { input_str += std::to_string(std::get<double>(t->attr)) + " "; } catch(...) { input_str += "num "; }
+
+            
+
+            else if (t->type == lexer::Token::EOF_)
+
+                input_str += "$";
+
+
+
+            else
+
+                input_str += "op "; 
+
+        }
+
+
+
+        std::cout << std::left 
+
+                  << std::setw(30) << StackToString(stack)
+
+                  << std::setw(40) << input_str
+
+                  << action.ToString() << std::endl;
+
+
+
+        if (action.type == Action::Type::Shift)
+
+        {
+
+            stack.push_back(action.operand);
+
+            cursor++;
+
+        }
+
+
+
+        else if (action.type == Action::Type::Reduce)
+
+        {
+
+            const auto& rule = grammar_.GetRules()[action.operand];
+
+            
+
+            size_t len = rule.rhs.size();
+
+            
+
+            for(size_t k=0; k < len; ++k)
+
+            {
+
+                stack.pop_back();
+
+            }
+
+            
+
+            int top_state = stack.back();
+
+            
+
+            if (goto_table_.count({top_state, Grammar::Symbol(rule.lhs)}))
+
+            {
+
+                int next_state = goto_table_.at({top_state, Grammar::Symbol(rule.lhs)});
+
+                stack.push_back(next_state);
+
+
+
+            }
+
+            
+
+            else
+
+            {
+
+                std::cerr << "CRITICAL ERROR: No GOTO entry after reduce!" << std::endl;
+
+                return;
+
+            }
+
+        }
+
+
+
+        else if (action.type == Action::Type::Accept)
+
+        {
+
+            std::cout << "Parsing completed successfully!" << std::endl;
+
+            return;
+
+        }
+
+
+
+        else
+
+        {
+
+            std::cerr << "Syntax Error!" << std::endl;
+
+            return;
+
+        }
+
+    }
+
+}
+
+
+
+std::string Parser::StackToString(const std::vector<int>& stack) const {
+
+    std::string s = "";
+
+    for (int st : stack) s += std::to_string(st) + " ";
+
+    return s;
+
+}
+
+
+
+} // namespace syntaxer
+
+} // namespace slr_parser
+
+
+
+
+
+а вот вывод программы. 
+
+
+
+STACK                         INPUT                                   ACTION
+
+------------------------------------------------------------------------------------------
+
+0                             popa op 99.000000                       Shift 5
+
+0 5                           op 99.000000                            Reduce rule 8
+
+0 3                           op 99.000000                            Reduce rule 6
+
+0 2                           op 99.000000                            Reduce rule 3
+
+0 1                           op 99.000000                            Shift 7
+
+0 1 7                         99.000000                               Shift 4
+
+0 1 7 4                                                               Reduce rule 9
+
+0 1 7 3                                                               Reduce rule 6
+
+0 1 7 12                                                              Reduce rule 1
+
+0 1                                                                   Accept
+
+Parsing completed successfully!
+
+
+
+
+
+вместо op надо писать саму операцию, а в стеке 

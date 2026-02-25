@@ -18,7 +18,9 @@ public:
         NUM = 258,
         ID,
         PLUS,
+        MINUS,
         MUL,
+        DIV,
         LPAREN,
         RPAREN,
         UNKNOWN

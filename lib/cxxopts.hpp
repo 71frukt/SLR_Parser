@@ -1110,7 +1110,7 @@ parse_value(const std::string& text, std::string& value)
   value = text;
 }
 
-// The fallback parser. It uses the stringstream parser to parse all types
+// The fallback grammar_worker. It uses the stringstream grammar_worker to parse all types
 // that have not been overloaded explicitly.  It has to be placed in the
 // source code before all other more specialized templates.
 template <typename T,
@@ -2557,9 +2557,9 @@ inline
 ParseResult
 Options::parse(int argc, const char* const* argv)
 {
-  OptionParser parser(*m_options, m_positional, m_allow_unrecognised);
+  OptionParser grammar_worker(*m_options, m_positional, m_allow_unrecognised);
 
-  return parser.parse(argc, argv);
+  return grammar_worker.parse(argc, argv);
 }
 
 inline ParseResult
