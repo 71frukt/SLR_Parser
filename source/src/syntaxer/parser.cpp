@@ -1,10 +1,39 @@
 #include "syntaxer/parser.hpp"
 #include <iostream>
 #include <iomanip>
+#include <string>
 
 namespace slr_parser {
 namespace syntaxer   {
-    
+
+// --- 1. Вспомогательная функция для красивых имен ---
+std::string Parser::GetSymbolName_(const Grammar::Symbol& sym) const
+{
+    if (sym.IsTerminal()) {
+        auto type = sym.AsTerminal();
+        switch (type) {
+            case lexer::Token::ID:     return "id";
+            case lexer::Token::NUM:    return "num";
+            case lexer::Token::PLUS:   return "+";
+            case lexer::Token::MINUS:  return "-";
+            case lexer::Token::MUL:    return "*";
+            case lexer::Token::DIV:    return "/";
+            case lexer::Token::LPAREN: return "(";
+            case lexer::Token::RPAREN: return ")";
+            case lexer::Token::EOF_:   return "$";
+            default: return "term";
+        }
+    } else {
+        auto nt = sym.AsNonTerminal();
+        switch (nt) {
+            case Grammar::NonTerminalT::EXPR:   return "E";
+            case Grammar::NonTerminalT::TERM:   return "T";
+            case Grammar::NonTerminalT::FACTOR: return "F";
+            case Grammar::NonTerminalT::DODIK:  return "S'";
+            default: return "NT";
+        }
+    }
+}
 
 Parser::Parser(const Grammar& grammar, const DfaBuilder& col, const GrammarWorker::FirstFollow& ff) 
     : grammar_(grammar)
@@ -16,6 +45,8 @@ void Parser::BuildTables(const DfaBuilder& col, const GrammarWorker::FirstFollow
     const auto& states = col.GetStates();
     const auto& transitions = col.GetTransitions();
 
+    state_symbol_map_[0] = "$"; 
+
     for (size_t i = 0; i < states.size(); ++i)
     {
         int state_idx = static_cast<int>(i);
@@ -26,6 +57,8 @@ void Parser::BuildTables(const DfaBuilder& col, const GrammarWorker::FirstFollow
             if (key.first != state_idx) continue;
             
             Grammar::Symbol symbol = key.second;
+
+            state_symbol_map_[next_state] = GetSymbolName_(symbol);
             
             if (symbol.IsTerminal())
                 action_table_[{state_idx, symbol}] = {Action::Type::Shift, next_state};
@@ -45,11 +78,9 @@ void Parser::BuildTables(const DfaBuilder& col, const GrammarWorker::FirstFollow
                     Grammar::Symbol eof = GrammarWorker::FirstFollow::EndMarker();
                     action_table_[{state_idx, eof}] = {Action::Type::Accept, 0};
                 } 
-                
                 else
                 {
                     const auto& follow_set = ff.GetFollow(rule.lhs);
-                    
                     for (const auto& term : follow_set)
                     {
                         action_table_[{state_idx, term}] = {Action::Type::Reduce, static_cast<int>(item.rule_num)};
@@ -63,7 +94,6 @@ void Parser::BuildTables(const DfaBuilder& col, const GrammarWorker::FirstFollow
 void Parser::Run(std::vector<std::unique_ptr<lexer::Token>> tokens)
 {
     std::vector<int> stack = {0};
-    
     size_t cursor = 0;
 
     std::cout << std::left 
@@ -97,13 +127,13 @@ void Parser::Run(std::vector<std::unique_ptr<lexer::Token>> tokens)
             
             else if (t->type == lexer::Token::EOF_)
                 input_str += "$";
-
+            
             else
-                input_str += "op "; 
+                input_str += GetSymbolName_(Grammar::Symbol(t->type)) + " "; 
         }
 
         std::cout << std::left 
-                  << std::setw(30) << StackToString(stack)
+                  << std::setw(30) << StackToString(stack) 
                   << std::setw(40) << input_str
                   << action.ToString() << std::endl;
 
@@ -112,17 +142,12 @@ void Parser::Run(std::vector<std::unique_ptr<lexer::Token>> tokens)
             stack.push_back(action.operand);
             cursor++;
         }
-
         else if (action.type == Action::Type::Reduce)
         {
             const auto& rule = grammar_.GetRules()[action.operand];
-            
             size_t len = rule.rhs.size();
             
-            for(size_t k=0; k < len; ++k)
-            {
-                stack.pop_back();
-            }
+            for(size_t k=0; k < len; ++k) stack.pop_back();
             
             int top_state = stack.back();
             
@@ -130,22 +155,18 @@ void Parser::Run(std::vector<std::unique_ptr<lexer::Token>> tokens)
             {
                 int next_state = goto_table_.at({top_state, Grammar::Symbol(rule.lhs)});
                 stack.push_back(next_state);
-
             }
-            
             else
             {
                 std::cerr << "CRITICAL ERROR: No GOTO entry after reduce!" << std::endl;
                 return;
             }
         }
-
         else if (action.type == Action::Type::Accept)
         {
-            std::cout << "Parsing completed successfully!" << std::endl;
+            std::cout << "[[SUCCESS]]" << std::endl;
             return;
         }
-
         else
         {
             std::cerr << "Syntax Error!" << std::endl;
@@ -156,7 +177,17 @@ void Parser::Run(std::vector<std::unique_ptr<lexer::Token>> tokens)
 
 std::string Parser::StackToString(const std::vector<int>& stack) const {
     std::string s = "";
-    for (int st : stack) s += std::to_string(st) + " ";
+    for (int st : stack)
+    {
+        if (state_symbol_map_.count(st))
+            s += state_symbol_map_.at(st);
+        
+        else
+            s += std::to_string(st);
+        
+        s += " ";
+    }
+    
     return s;
 }
 

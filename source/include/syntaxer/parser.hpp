@@ -55,6 +55,9 @@ private:
     void BuildTables(const DfaBuilder& collection, const GrammarWorker::FirstFollow& ff);
 
     std::string StackToString(const std::vector<int>& state_stack) const;
+
+    std::map<int, std::string> state_symbol_map_;
+    std::string GetSymbolName_(const Grammar::Symbol& sym) const;
 };
 
 } // namespace syntaxer

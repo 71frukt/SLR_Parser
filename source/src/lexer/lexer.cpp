@@ -688,7 +688,7 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 #line 43 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::PLUS    , YYText()); return slr_parser::lexer::Token::MINUS   ; }
+{ this->CreateToken_(slr_parser::lexer::Token::MINUS   , YYText()); return slr_parser::lexer::Token::MINUS   ; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
@@ -698,7 +698,7 @@ YY_RULE_SETUP
 case 8:
 YY_RULE_SETUP
 #line 45 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::MUL     , YYText()); return slr_parser::lexer::Token::DIV     ; }
+{ this->CreateToken_(slr_parser::lexer::Token::DIV     , YYText()); return slr_parser::lexer::Token::DIV     ; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
