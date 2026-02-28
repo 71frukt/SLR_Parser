@@ -13,7 +13,7 @@
 %option yyclass="slr_parser::lexer::CrazyLexer"
 
 %{
-#define YY_USER_ACTION this->UpdateCurLocation_();
+#define YY_USER_ACTION UpdateCurLocation_();
 %}
 
 DIGIT   (0|[1-9][0-9]*)(\.[0-9]+)?
@@ -35,16 +35,16 @@ void slr_parser::lexer::CrazyLexer::UpdateCurLocation_()
 %%
 
 {WS}+       { /* skip */ }
-\n          { this->real_cur_column_ = 1; }
+\n          { real_cur_column_ = 1; }
 
-{DIGIT}     { this->CreateToken_(slr_parser::lexer::Token::NUM     , YYText()); return slr_parser::lexer::Token::NUM     ; }
-{ALPHA}+    { this->CreateToken_(slr_parser::lexer::Token::ID      , YYText()); return slr_parser::lexer::Token::ID      ; }
-"+"         { this->CreateToken_(slr_parser::lexer::Token::PLUS    , YYText()); return slr_parser::lexer::Token::PLUS    ; }
-"-"         { this->CreateToken_(slr_parser::lexer::Token::MINUS   , YYText()); return slr_parser::lexer::Token::MINUS   ; }
-"*"         { this->CreateToken_(slr_parser::lexer::Token::MUL     , YYText()); return slr_parser::lexer::Token::MUL     ; }
-"/"         { this->CreateToken_(slr_parser::lexer::Token::DIV     , YYText()); return slr_parser::lexer::Token::DIV     ; }
-"("         { this->CreateToken_(slr_parser::lexer::Token::LPAREN  , YYText()); return slr_parser::lexer::Token::LPAREN  ; }
-")"         { this->CreateToken_(slr_parser::lexer::Token::RPAREN  , YYText()); return slr_parser::lexer::Token::RPAREN  ; }
-.           { this->CreateToken_(slr_parser::lexer::Token::UNKNOWN , YYText()); return slr_parser::lexer::Token::UNKNOWN ; }
+{DIGIT}     { CreateToken_(slr_parser::lexer::Token::NUM     , YYText()); return slr_parser::lexer::Token::NUM     ; }
+{ALPHA}+    { CreateToken_(slr_parser::lexer::Token::ID      , YYText()); return slr_parser::lexer::Token::ID      ; }
+"+"         { CreateToken_(slr_parser::lexer::Token::PLUS    , YYText()); return slr_parser::lexer::Token::PLUS    ; }
+"-"         { CreateToken_(slr_parser::lexer::Token::MINUS   , YYText()); return slr_parser::lexer::Token::MINUS   ; }
+"*"         { CreateToken_(slr_parser::lexer::Token::MUL     , YYText()); return slr_parser::lexer::Token::MUL     ; }
+"/"         { CreateToken_(slr_parser::lexer::Token::DIV     , YYText()); return slr_parser::lexer::Token::DIV     ; }
+"("         { CreateToken_(slr_parser::lexer::Token::LPAREN  , YYText()); return slr_parser::lexer::Token::LPAREN  ; }
+")"         { CreateToken_(slr_parser::lexer::Token::RPAREN  , YYText()); return slr_parser::lexer::Token::RPAREN  ; }
+.           { CreateToken_(slr_parser::lexer::Token::UNKNOWN , YYText()); return slr_parser::lexer::Token::UNKNOWN ; }
 
 %%

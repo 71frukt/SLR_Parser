@@ -1,0 +1,9 @@
+STACK                         INPUT                                   ACTION
+------------------------------------------------------------------------------------------
+$                             1.000000 +                              Shift 4
+$ num                         +                                       Reduce rule 9
+$ F                           +                                       Reduce rule 6
+$ T                           +                                       Reduce rule 3
+$ E                           +                                       Shift 7
+$ E +                                                                 Error
+Grammatical error Unexpected End of File. Perhaps you missed smth?

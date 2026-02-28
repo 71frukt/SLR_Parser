@@ -41,7 +41,7 @@ class Parser
 public:
     Parser(const Grammar& grammar, const DfaBuilder& collection, const GrammarWorker::FirstFollow& ff);
 
-    void Run(std::vector<std::unique_ptr<lexer::Token>> tokens);
+    void Run(std::vector<std::unique_ptr<lexer::Token>> tokens, std::ostream& ostream);
 
 private:
     const Grammar& grammar_;

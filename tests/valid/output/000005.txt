@@ -1,0 +1,22 @@
+STACK                         INPUT                                   ACTION
+------------------------------------------------------------------------------------------
+$                             777.000000 + abob * 888.000000 - boba   Shift 4
+$ num                         + abob * 888.000000 - boba              Reduce rule 9
+$ F                           + abob * 888.000000 - boba              Reduce rule 6
+$ T                           + abob * 888.000000 - boba              Reduce rule 3
+$ E                           + abob * 888.000000 - boba              Shift 7
+$ E +                         abob * 888.000000 - boba                Shift 5
+$ E + id                      * 888.000000 - boba                     Reduce rule 8
+$ E + F                       * 888.000000 - boba                     Reduce rule 6
+$ E + T                       * 888.000000 - boba                     Shift 9
+$ E + T *                     888.000000 - boba                       Shift 4
+$ E + T * num                 - boba                                  Reduce rule 9
+$ E + T * F                   - boba                                  Reduce rule 4
+$ E + T                       - boba                                  Reduce rule 1
+$ E                           - boba                                  Shift 8
+$ E -                         boba                                    Shift 5
+$ E - id                                                              Reduce rule 8
+$ E - F                                                               Reduce rule 6
+$ E - T                                                               Reduce rule 2
+$ E                                                                   Accept
+[[SUCCESS]]

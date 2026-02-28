@@ -1,0 +1,24 @@
+STACK                         INPUT                                   ACTION
+------------------------------------------------------------------------------------------
+$                             1.000000 + 2.000000 / 3.000000 - ( ValidVar + invalid term var ) Shift 4
+$ num                         + 2.000000 / 3.000000 - ( ValidVar + invalid term var ) Reduce rule 9
+$ F                           + 2.000000 / 3.000000 - ( ValidVar + invalid term var ) Reduce rule 6
+$ T                           + 2.000000 / 3.000000 - ( ValidVar + invalid term var ) Reduce rule 3
+$ E                           + 2.000000 / 3.000000 - ( ValidVar + invalid term var ) Shift 7
+$ E +                         2.000000 / 3.000000 - ( ValidVar + invalid term var ) Shift 4
+$ E + num                     / 3.000000 - ( ValidVar + invalid term var ) Reduce rule 9
+$ E + F                       / 3.000000 - ( ValidVar + invalid term var ) Reduce rule 6
+$ E + T                       / 3.000000 - ( ValidVar + invalid term var ) Shift 10
+$ E + T /                     3.000000 - ( ValidVar + invalid term var ) Shift 4
+$ E + T / num                 - ( ValidVar + invalid term var )       Reduce rule 9
+$ E + T / F                   - ( ValidVar + invalid term var )       Reduce rule 5
+$ E + T                       - ( ValidVar + invalid term var )       Reduce rule 1
+$ E                           - ( ValidVar + invalid term var )       Shift 8
+$ E -                         ( ValidVar + invalid term var )         Shift 6
+$ E - (                       ValidVar + invalid term var )           Shift 5
+$ E - ( id                    + invalid term var )                    Reduce rule 8
+$ E - ( F                     + invalid term var )                    Reduce rule 6
+$ E - ( T                     + invalid term var )                    Reduce rule 3
+$ E - ( E                     + invalid term var )                    Shift 7
+$ E - ( E +                   invalid term var )                      Shift 5
+Syntax error: line 1, column 32

@@ -1,0 +1,66 @@
+STACK                         INPUT                                   ACTION
+------------------------------------------------------------------------------------------
+$                             ( ( ( ( 1.000000 + 2.000000 ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 6
+$ (                           ( ( ( 1.000000 + 2.000000 ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 6
+$ ( (                         ( ( 1.000000 + 2.000000 ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 6
+$ ( ( (                       ( 1.000000 + 2.000000 ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 6
+$ ( ( ( (                     1.000000 + 2.000000 ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 4
+$ ( ( ( ( num                 + 2.000000 ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 9
+$ ( ( ( ( F                   + 2.000000 ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 6
+$ ( ( ( ( T                   + 2.000000 ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 3
+$ ( ( ( ( E                   + 2.000000 ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 7
+$ ( ( ( ( E +                 2.000000 ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 4
+$ ( ( ( ( E + num             ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 9
+$ ( ( ( ( E + F               ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 6
+$ ( ( ( ( E + T               ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 1
+$ ( ( ( ( E                   ) + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 16
+$ ( ( ( ( E )                 + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 7
+$ ( ( ( F                     + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 6
+$ ( ( ( T                     + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 3
+$ ( ( ( E                     + VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 7
+$ ( ( ( E +                   VaR ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 5
+$ ( ( ( E + id                ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 8
+$ ( ( ( E + F                 ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 6
+$ ( ( ( E + T                 ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 1
+$ ( ( ( E                     ) / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 16
+$ ( ( ( E )                   / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 7
+$ ( ( F                       / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 6
+$ ( ( T                       / ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 10
+$ ( ( T /                     ( A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 6
+$ ( ( T / (                   A - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 5
+$ ( ( T / ( id                - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 8
+$ ( ( T / ( F                 - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 6
+$ ( ( T / ( T                 - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Reduce rule 3
+$ ( ( T / ( E                 - 9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 8
+$ ( ( T / ( E -               9.000000 ) + 1.000000 ) - 5.000000 ) / lol Shift 4
+$ ( ( T / ( E - num           ) + 1.000000 ) - 5.000000 ) / lol       Reduce rule 9
+$ ( ( T / ( E - F             ) + 1.000000 ) - 5.000000 ) / lol       Reduce rule 6
+$ ( ( T / ( E - T             ) + 1.000000 ) - 5.000000 ) / lol       Reduce rule 2
+$ ( ( T / ( E                 ) + 1.000000 ) - 5.000000 ) / lol       Shift 16
+$ ( ( T / ( E )               + 1.000000 ) - 5.000000 ) / lol         Reduce rule 7
+$ ( ( T / F                   + 1.000000 ) - 5.000000 ) / lol         Reduce rule 5
+$ ( ( T                       + 1.000000 ) - 5.000000 ) / lol         Reduce rule 3
+$ ( ( E                       + 1.000000 ) - 5.000000 ) / lol         Shift 7
+$ ( ( E +                     1.000000 ) - 5.000000 ) / lol           Shift 4
+$ ( ( E + num                 ) - 5.000000 ) / lol                    Reduce rule 9
+$ ( ( E + F                   ) - 5.000000 ) / lol                    Reduce rule 6
+$ ( ( E + T                   ) - 5.000000 ) / lol                    Reduce rule 1
+$ ( ( E                       ) - 5.000000 ) / lol                    Shift 16
+$ ( ( E )                     - 5.000000 ) / lol                      Reduce rule 7
+$ ( F                         - 5.000000 ) / lol                      Reduce rule 6
+$ ( T                         - 5.000000 ) / lol                      Reduce rule 3
+$ ( E                         - 5.000000 ) / lol                      Shift 8
+$ ( E -                       5.000000 ) / lol                        Shift 4
+$ ( E - num                   ) / lol                                 Reduce rule 9
+$ ( E - F                     ) / lol                                 Reduce rule 6
+$ ( E - T                     ) / lol                                 Reduce rule 2
+$ ( E                         ) / lol                                 Shift 16
+$ ( E )                       / lol                                   Reduce rule 7
+$ F                           / lol                                   Reduce rule 6
+$ T                           / lol                                   Shift 10
+$ T /                         lol                                     Shift 5
+$ T / id                                                              Reduce rule 8
+$ T / F                                                               Reduce rule 5
+$ T                                                                   Reduce rule 3
+$ E                                                                   Accept
+[[SUCCESS]]
