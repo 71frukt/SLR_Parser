@@ -445,7 +445,7 @@ static const flex_int32_t yy_rule_can_match_eol[13] =
 #line 446 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.cpp"
 #line 12 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
     // count lines
-#define YY_USER_ACTION this->UpdateCurLocation_();
+#define YY_USER_ACTION UpdateCurLocation_();
 #line 450 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.cpp"
 #line 24 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
 void slr_parser::lexer::CrazyLexer::UpdateCurLocation_()
@@ -668,52 +668,52 @@ case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
 #line 38 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->real_cur_column_ = 1; }
+{ real_cur_column_ = 1; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 40 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::NUM     , YYText()); return slr_parser::lexer::Token::NUM     ; }
+{ CreateToken_(slr_parser::lexer::Token::NUM     , YYText()); return slr_parser::lexer::Token::NUM     ; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 41 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::ID      , YYText()); return slr_parser::lexer::Token::ID      ; }
+{ CreateToken_(slr_parser::lexer::Token::ID      , YYText()); return slr_parser::lexer::Token::ID      ; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 42 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::PLUS    , YYText()); return slr_parser::lexer::Token::PLUS    ; }
+{ CreateToken_(slr_parser::lexer::Token::PLUS    , YYText()); return slr_parser::lexer::Token::PLUS    ; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 43 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::MINUS   , YYText()); return slr_parser::lexer::Token::MINUS   ; }
+{ CreateToken_(slr_parser::lexer::Token::MINUS   , YYText()); return slr_parser::lexer::Token::MINUS   ; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 44 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::MUL     , YYText()); return slr_parser::lexer::Token::MUL     ; }
+{ CreateToken_(slr_parser::lexer::Token::MUL     , YYText()); return slr_parser::lexer::Token::MUL     ; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 45 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::DIV     , YYText()); return slr_parser::lexer::Token::DIV     ; }
+{ CreateToken_(slr_parser::lexer::Token::DIV     , YYText()); return slr_parser::lexer::Token::DIV     ; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 46 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::LPAREN  , YYText()); return slr_parser::lexer::Token::LPAREN  ; }
+{ CreateToken_(slr_parser::lexer::Token::LPAREN  , YYText()); return slr_parser::lexer::Token::LPAREN  ; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 47 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::RPAREN  , YYText()); return slr_parser::lexer::Token::RPAREN  ; }
+{ CreateToken_(slr_parser::lexer::Token::RPAREN  , YYText()); return slr_parser::lexer::Token::RPAREN  ; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 48 "/home/frukt71/Github/SLR_Parser/source/src/lexer/lexer.l"
-{ this->CreateToken_(slr_parser::lexer::Token::UNKNOWN , YYText()); return slr_parser::lexer::Token::UNKNOWN ; }
+{ CreateToken_(slr_parser::lexer::Token::UNKNOWN , YYText()); return slr_parser::lexer::Token::UNKNOWN ; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
